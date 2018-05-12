@@ -33,5 +33,13 @@ namespace BandTracker.Tests
             DBConfiguration.ConnectionString = "server=localhost;user id=root;password=;port=3306;database=band_tracker;";
         }
 
+        [TestMethod]
+        public void Venue_returns_BlueCafe()
+        {
+            Venue result = Venue.Find(1);
+            string finalResult = result.GetVenueName();
+
+            Assert.AreEqual("Blues Cafe", finalResult);
+        }
     }
 }
