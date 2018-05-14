@@ -53,5 +53,57 @@ namespace BandTracker.Models
         }
 
 
+        public void DeleteEvent()
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"DELETE FROM events WHERE event_id = @EventID;";
+
+            MySqlParameter eventIdParameter = new MySqlParameter();
+            eventIdParameter.ParameterName = "@EventId";
+            eventIdParameter.Value = _id;
+            cmd.Parameters.Add(eventIdParameter);
+
+            cmd.ExecuteNonQuery();
+            if (conn != null)
+            {
+              conn.Close();
+            }
+
+            conn.Dispose();
+        }
+
+        public static Event Find(int eventId)
+        {
+            MySqlConnection conn = DB.Connection();
+            conn.Open();
+            var cmd = conn.CreateCommand() as MySqlCommand;
+            cmd.CommandText = @"SELECT * FROM events WHERE event_id = (@searchId);";
+
+            MySqlParameter searchId = new MySqlParameter();
+            searchId.ParameterName = "@searchId";
+            searchId.Value = eventId;
+            cmd.Parameters.Add(searchId);
+
+            var rdr = cmd.ExecuteReader() as MySqlDataReader;
+            int id = 0;
+            int VenueId = 0;
+            int BandId = 0;
+
+            while(rdr.Read())
+            {
+              id = rdr.GetInt32(0);
+              VenueId = rdr.GetInt32(1);
+              BandId = rdr.GetInt32(2);
+            }
+            Event newEvent= new Event(VenueId, BandId, id);
+            conn.Close();
+            if (conn != null)
+            {
+                conn.Dispose();
+            }
+            return newEvent;
+        }
     }
 }

@@ -1,0 +1,13 @@
+@{
+  Layout = "_Layout";
+}
+
+
+<h1>Add a new Band</h1>
+<form action="/create-band" method="post">
+  <label for="band-name">Name of Band:</label>
+  <input id="band-name" name="band-name" type="text">
+  <button class="btn btn-primary" type="submit">Add New Band</button>
+</form>
+<p><a href="/">Back home</a></p>
+<p><a href="/view-bands">View all Bands</a></p>

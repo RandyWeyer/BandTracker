@@ -14,6 +14,12 @@ namespace BandTracker.Controllers
 
           return View();
           }
+          
+          [HttpGet("/success")]
+          public ActionResult Success()
+          {
+              return View("Success");
+          }
 
     }
 }
